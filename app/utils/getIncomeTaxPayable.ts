@@ -6,13 +6,14 @@ const taxBrackets = [
   { minIncome: 0, baseTax: 0, taxRate: 0 },
 ];
 
-export const getIncomeTax = (income: number) => {
-  const calculateTax = (income: number): number => {
-    for (const bracket of taxBrackets) {
-      if (income > bracket.minIncome) {
-        return bracket.baseTax + (income - bracket.minIncome) * bracket.taxRate;
-      }
+export const getIncomeTaxPayable = (income: number) => {
+  for (const bracket of taxBrackets) {
+    if (income > bracket.minIncome) {
+      return (
+        bracket.baseTax +
+        (income - bracket.minIncome) * bracket.taxRate
+      ).toFixed();
     }
-    return 0;
-  };
+  }
+  return 0;
 };
