@@ -54,7 +54,7 @@ const invoices = [
   },
 ];
 
-export function DisplayTable() {
+export function CasualTable() {
   return (
     <Table>
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}

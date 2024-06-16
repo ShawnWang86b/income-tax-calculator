@@ -23,25 +23,29 @@ import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
 
 const FormSchema = z.object({
-  incomeType: z.string({
-    required_error: "Please select an income type.",
-  }),
+  incomeType: z
+    .string()
+    .min(1, "Please select an income type.")
+    .default("annually"),
   income: z
-    .string({ required_error: "Please input the income." })
+    .string()
+    .min(1, "Please input the income.")
     .refine((val) => !isNaN(parseFloat(val)), {
       message: "Income must be a number.",
     })
     .transform((val) => parseFloat(val)),
   deductions: z
-    .string({ required_error: "Please input the deductions." })
+    .string()
+    .min(1, "Please input the deductions.")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Deductions must be a number.",
     })
     .transform((val) => parseFloat(val)),
   taxCreditsAndConcessions: z
-    .string({ required_error: "Please input the taxCreditsAndConcessions." })
+    .string()
+    .min(1, "Please input the tax credits and concessions.")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Tax credits and concessions must be a number.",
     })
     .transform((val) => parseFloat(val)),
 });
@@ -58,16 +62,12 @@ export function FullTimeTaxForm() {
   const {
     employmentType,
     incomeType,
-    fullTimeAnnuallySalary,
-    fullTimeMonthlySalary,
-    fullTimeDailySalary,
+    fullTimeIncome,
     fullTimeDeductions,
     fullTimeTaxCredits,
     setEmploymentType,
     setIncomeType,
-    setFullTimeAnnuallySalary,
-    setFullTimeMonthlySalary,
-    setFullTimeDailySalary,
+    setfullTimeIncome,
     setFullTimeDeductions,
     setFullTimeTaxCredits,
     reset,
@@ -119,7 +119,15 @@ export function FullTimeTaxForm() {
             <FormItem>
               <FormLabel>{`${dynamicIncomeType} salary`}</FormLabel>
               <FormControl>
-                <Input placeholder="Income" {...field} />
+                <Input
+                  placeholder="Income"
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setfullTimeIncome(parseFloat(e.target.value) || 0);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -133,7 +141,15 @@ export function FullTimeTaxForm() {
             <FormItem>
               <FormLabel>Deductions</FormLabel>
               <FormControl>
-                <Input placeholder="Deductions" {...field} />
+                <Input
+                  placeholder="Deductions"
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setFullTimeDeductions(parseFloat(e.target.value) || 0);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +163,15 @@ export function FullTimeTaxForm() {
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
-                <Input placeholder="Tax Credits And Concessions" {...field} />
+                <Input
+                  placeholder="Tax Credits And Concessions"
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setFullTimeTaxCredits(parseFloat(e.target.value) || 0);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

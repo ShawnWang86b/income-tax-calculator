@@ -81,7 +81,11 @@ export function CasualTaxForm() {
             <FormItem>
               <FormLabel>Hourly wage</FormLabel>
               <FormControl>
-                <Input placeholder="Hourly wage" {...field} />
+                <Input
+                  placeholder="Hourly wage"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +98,11 @@ export function CasualTaxForm() {
             <FormItem>
               <FormLabel>Total hours</FormLabel>
               <FormControl>
-                <Input placeholder="Total hours" {...field} />
+                <Input
+                  placeholder="Total hours"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +116,11 @@ export function CasualTaxForm() {
             <FormItem>
               <FormLabel>Deductions</FormLabel>
               <FormControl>
-                <Input placeholder="Deductions" {...field} />
+                <Input
+                  placeholder="Deductions"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -122,7 +134,11 @@ export function CasualTaxForm() {
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
-                <Input placeholder="Tax Credits And Concessions" {...field} />
+                <Input
+                  placeholder="Tax Credits And Concessions"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

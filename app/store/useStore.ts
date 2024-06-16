@@ -1,11 +1,15 @@
 import { create } from "zustand";
-
+interface IPartime {
+  hourlyWage: number;
+  hoursPerWeek: number;
+  weeksPerYear: number;
+  deductions: number;
+  taxCredits: number;
+}
 interface TaxState {
   employmentType: string;
   incomeType: string;
-  fullTimeAnnuallySalary: number;
-  fullTimeMonthlySalary: number;
-  fullTimeDailySalary: number;
+  fullTimeIncome: number;
   fullTimeDeductions: number;
   fullTimeTaxCredits: number;
 
@@ -24,13 +28,17 @@ interface TaxState {
   contractorTotalDays: number;
   contractorBusinessExpenses: number;
   contractorTaxCredits: number;
+
+  fullTimeResult: any;
+  partTimeResult: IPartime;
+  casualResult: any;
+  contractorResult: any;
+
   reset: () => void;
   setEmploymentType: (employmentType: string) => void;
   setIncomeType: (incomeType: string) => void;
 
-  setFullTimeAnnuallySalary: (fullTimeAnnuallySalary: number) => void;
-  setFullTimeMonthlySalary: (fullTimeMonthlySalary: number) => void;
-  setFullTimeDailySalary: (fullTimeDailySalary: number) => void;
+  setfullTimeIncome: (fullTimeIncome: number) => void;
   setFullTimeDeductions: (deductions: number) => void;
   setFullTimeTaxCredits: (taxCredits: number) => void;
 
@@ -49,14 +57,18 @@ interface TaxState {
   setContractorTotalDays: (contractorTotalDays: number) => void;
   setContractorBusinessExpenses: (contractorBusinessExpenses: number) => void;
   setContractorTaxCredits: (contractorTaxCredits: number) => void;
+
+  setFullTimeResult: (fullTimeResult: number) => void;
+  setPartTimeResult: (partTimeResult: IPartime) => void;
+  setCasualResult: (casualResult: number) => void;
+  setContractorResult: (contractorResult: number) => void;
 }
 
 const initialState = {
   employmentType: "full-time",
   incomeType: "annually",
-  fullTimeAnnuallySalary: 0,
-  fullTimeMonthlySalary: 0,
-  fullTimeDailySalary: 0,
+
+  fullTimeIncome: 0,
   fullTimeDeductions: 0,
   fullTimeTaxCredits: 0,
 
@@ -75,6 +87,17 @@ const initialState = {
   contractorTotalDays: 0,
   contractorBusinessExpenses: 0,
   contractorTaxCredits: 0,
+
+  fullTimeResult: {},
+  partTimeResult: {
+    hourlyWage: 0,
+    hoursPerWeek: 0,
+    weeksPerYear: 0,
+    deductions: 0,
+    taxCredits: 0,
+  },
+  casualResult: {},
+  contractorResult: {},
 };
 
 const useTaxStore = create<TaxState>((set) => ({
@@ -84,12 +107,9 @@ const useTaxStore = create<TaxState>((set) => ({
   },
   setEmploymentType: (employmentType) => set(() => ({ employmentType })),
   setIncomeType: (incomeType) => set(() => ({ incomeType })),
-  setFullTimeAnnuallySalary: (fullTimeAnnuallySalary) =>
-    set(() => ({ fullTimeAnnuallySalary })),
-  setFullTimeMonthlySalary: (fullTimeMonthlySalary) =>
-    set(() => ({ fullTimeMonthlySalary })),
-  setFullTimeDailySalary: (fullTimeDailySalary) =>
-    set(() => ({ fullTimeDailySalary })),
+
+  setfullTimeIncome: (fullTimeIncome) => set(() => ({ fullTimeIncome })),
+
   setFullTimeDeductions: (fullTimeDeductions) =>
     set(() => ({ fullTimeDeductions })),
   setFullTimeTaxCredits: (fullTimeTaxCredits) =>
@@ -119,6 +139,11 @@ const useTaxStore = create<TaxState>((set) => ({
     set(() => ({ contractorBusinessExpenses })),
   setContractorTaxCredits: (contractorTaxCredits) =>
     set(() => ({ contractorTaxCredits })),
+
+  setFullTimeResult: (fullTimeResult) => set(() => ({ fullTimeResult })),
+  setPartTimeResult: (partTimeResult) => set(() => ({ partTimeResult })),
+  setCasualResult: (casualResult) => set(() => ({ casualResult })),
+  setContractorResult: (contractorResult) => set(() => ({ contractorResult })),
 }));
 
 export default useTaxStore;

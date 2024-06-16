@@ -82,7 +82,11 @@ export function ContractorTaxForm() {
             <FormItem>
               <FormLabel>Daily rate</FormLabel>
               <FormControl>
-                <Input placeholder="Income" {...field} />
+                <Input
+                  placeholder="Income"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,7 +100,11 @@ export function ContractorTaxForm() {
             <FormItem>
               <FormLabel>Total Days</FormLabel>
               <FormControl>
-                <Input placeholder="Total Days" {...field} />
+                <Input
+                  placeholder="Total Days"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -110,7 +118,11 @@ export function ContractorTaxForm() {
             <FormItem>
               <FormLabel>Business Expenses</FormLabel>
               <FormControl>
-                <Input placeholder="Business Expenses" {...field} />
+                <Input
+                  placeholder="Business Expenses"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -124,7 +136,11 @@ export function ContractorTaxForm() {
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
-                <Input placeholder="Tax Credits And Concessions" {...field} />
+                <Input
+                  placeholder="Tax Credits And Concessions"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
