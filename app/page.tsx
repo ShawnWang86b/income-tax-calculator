@@ -10,6 +10,8 @@ import { FullTimeTable } from "./components/FullTimeTable";
 import { PartTimeTable } from "./components/PartTimeTable";
 import { CasualTable } from "./components/CasualTable";
 import { ContractorTable } from "./components/ContractorTable";
+import HelpButton from "./components/HelpButton";
+import { ShareDialog } from "./components/ShareDialog";
 
 export default function Home() {
   const { employmentType } = useTaxStore();
@@ -30,6 +32,13 @@ export default function Home() {
         {employmentType === "casual" && <CasualTable />}
         {employmentType === "contractor" && <ContractorTable />}
       </section>
+
+      <div className="absolute bottom-36 right-10">
+        <ShareDialog />
+      </div>
+      <div className="absolute bottom-16 right-10">
+        <HelpButton />
+      </div>
     </main>
   );
 }

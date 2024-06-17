@@ -3,6 +3,8 @@
 import useTaxStore from "@/app/store/useStore";
 import { getContractorTaxResult } from "@/app/utils/getContractorTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
+import { getIncomeRank } from "@/app/utils/getIncomeRank";
+import { ShareDialog } from "@/app/components/ShareDialog";
 
 export function ContractorTable() {
   const { contractorResult } = useTaxStore();
@@ -16,12 +18,22 @@ export function ContractorTable() {
     taxCredits
   );
 
+  const netIncome =
+    contractorTaxResult.taxableIncome -
+    contractorTaxResult.taxPayable -
+    contractorTaxResult.levy;
+
+  const rankPercentage = getIncomeRank(netIncome);
   return (
     <section className="flex flex-col gap-2 border">
       <div className="flex flex-col gap-2 bg-[#874ac4] text-white p-6">
         <h2>The annual estimated tax on your taxable income is</h2>
         <p className="font-bold text-2xl">
           ${formatNumber(Math.round(contractorTaxResult.taxPayable))}
+        </p>
+        <p>
+          Your net income exceeds that of {(100 - rankPercentage).toFixed(1)}%
+          of the users in our system
         </p>
       </div>
       <div className="p-6">
@@ -45,16 +57,7 @@ export function ContractorTable() {
 
           <div className="flex justify-between font-bold">
             <p>Your income after tax & Medicare levy:</p>
-            <p>
-              $
-              {formatNumber(
-                Math.round(
-                  contractorTaxResult.taxableIncome -
-                    contractorTaxResult.taxPayable -
-                    contractorTaxResult.levy
-                )
-              )}
-            </p>
+            <p>${formatNumber(Math.round(netIncome))}</p>
           </div>
         </div>
         <div className="relative flex items-center py-5">

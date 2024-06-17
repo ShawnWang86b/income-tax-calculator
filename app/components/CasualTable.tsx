@@ -4,6 +4,7 @@ import useTaxStore from "@/app/store/useStore";
 import { getCasualTaxResult } from "@/app/utils/getCasualTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
 import { getIncomeRank } from "@/app/utils/getIncomeRank";
+import { ShareDialog } from "@/app/components/ShareDialog";
 
 export function CasualTable() {
   const { casualResult } = useTaxStore();

@@ -4,6 +4,7 @@ import useTaxStore from "@/app/store/useStore";
 import { getPartTimeTaxResult } from "@/app/utils/getPartTimeTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
 import { getIncomeRank } from "@/app/utils/getIncomeRank";
+import { ShareDialog } from "@/app/components/ShareDialog";
 
 export function PartTimeTable() {
   const { partTimeResult } = useTaxStore();
@@ -30,6 +31,7 @@ export function PartTimeTable() {
         <p className="font-bold text-2xl">
           ${formatNumber(Math.round(partTimeTaxResult.taxPayable))}
         </p>
+
         <p>
           Your net income exceeds that of {(100 - rankPercentage).toFixed(1)}%
           of the users in our system

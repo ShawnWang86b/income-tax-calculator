@@ -32,16 +32,13 @@ export function FullTimeTable() {
         <p className="font-bold text-2xl">
           ${formatNumber(Math.round(fullTimeTaxResult.taxPayable))}
         </p>
-        <div className="flex gap-2 items-center">
-          <p>
-            Your net income exceeds that of {(100 - rankPercentage).toFixed(1)}%
-            of the users in our system
-          </p>
-          <ShareDialog />
-        </div>
+        <p>
+          Your net income exceeds that of {(100 - rankPercentage).toFixed(1)}%
+          of the users in our system
+        </p>
       </div>
       <div className="p-6">
-        <p className="text-2xl pb-7">Summary</p>
+        <p className="text-2xl pb-8">Summary</p>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between font-bold ">
             <p>Your taxable income:</p>

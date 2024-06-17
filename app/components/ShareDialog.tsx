@@ -1,5 +1,4 @@
 import { Copy } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -34,7 +33,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 export function ShareDialog() {
   const { toast } = useToast();
-  const shareUrl = "https://yourwebsite.com";
+  const shareUrl = "https://income-tax-calculator-fawn.vercel.app/";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl).then(
@@ -57,16 +56,21 @@ export function ShareDialog() {
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <Share2 className="cursor-pointer hover:bg-stone-100 hover:text-[#874ac4] p-[4px] rounded-lg " />
+              <Button
+                variant="formSubmit"
+                className="w-12 h-12 p-2 rounded-full"
+              >
+                <Share2 />
+              </Button>
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Share to media</p>
+            <p>Share with friends</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Share with friends</DialogTitle>
           <DialogDescription>
@@ -74,52 +78,49 @@ export function ShareDialog() {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-start space-y-4 ">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <div className="grid flex-1 gap-2">
               <Label htmlFor="link" className="sr-only">
                 Link
               </Label>
               <Input
                 id="link"
-                defaultValue="https://ui.shadcn.com/docs/installation"
+                defaultValue="https://income-tax-calculator-fawn.vercel.app/"
                 readOnly
+                className="w-[400px] h-[50px]"
               />
             </div>
             <Button
               type="submit"
               variant="formSubmit"
-              size="sm"
+              size="lg"
               className="px-3"
             >
               <span className="sr-only">Copy</span>
-              <Copy className="h-4 w-4" onClick={copyToClipboard} />
+              <Copy onClick={copyToClipboard} />
             </Button>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-4 pt-2">
             <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={28} round />
+              <FacebookIcon size={32} round />
             </FacebookShareButton>
 
             <TwitterShareButton url={shareUrl}>
-              <TwitterIcon size={28} round />
+              <TwitterIcon size={32} round />
             </TwitterShareButton>
 
             <LinkedinShareButton url={shareUrl}>
-              <LinkedinIcon size={28} round />
+              <LinkedinIcon size={32} round />
             </LinkedinShareButton>
 
             <WhatsappShareButton url={shareUrl}>
-              <WhatsappIcon size={28} round />
+              <WhatsappIcon size={32} round />
             </WhatsappShareButton>
           </div>
         </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
+        <DialogFooter className="sm:justify-center">
+          <DialogClose asChild></DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
