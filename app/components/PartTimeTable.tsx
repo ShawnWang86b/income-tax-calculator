@@ -3,6 +3,7 @@
 import useTaxStore from "@/app/store/useStore";
 import { getPartTimeTaxResult } from "@/app/utils/getPartTimeTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
+import { getIncomeRank } from "@/app/utils/getIncomeRank";
 
 export function PartTimeTable() {
   const { partTimeResult } = useTaxStore();
@@ -16,6 +17,11 @@ export function PartTimeTable() {
     deductions,
     taxCredits
   );
+  const netIncome =
+    partTimeTaxResult.taxableIncome -
+    partTimeTaxResult.taxPayable -
+    partTimeTaxResult.levy;
+  const rankPercentage = getIncomeRank(netIncome);
 
   return (
     <section className="flex flex-col gap-2 border">
@@ -23,6 +29,10 @@ export function PartTimeTable() {
         <h2>The annual estimated tax on your taxable income is</h2>
         <p className="font-bold text-2xl">
           ${formatNumber(Math.round(partTimeTaxResult.taxPayable))}
+        </p>
+        <p>
+          Your net income exceeds that of {(100 - rankPercentage).toFixed(1)}%
+          of the users in our system
         </p>
       </div>
       <div className="p-6">
@@ -44,16 +54,7 @@ export function PartTimeTable() {
 
           <div className="flex justify-between font-bold">
             <p>Your income after tax & Medicare levy:</p>
-            <p>
-              $
-              {formatNumber(
-                Math.round(
-                  partTimeTaxResult.taxableIncome -
-                    partTimeTaxResult.taxPayable -
-                    partTimeTaxResult.levy
-                )
-              )}
-            </p>
+            <p>${formatNumber(Math.round(netIncome))}</p>
           </div>
         </div>
         <div className="relative flex items-center py-5">

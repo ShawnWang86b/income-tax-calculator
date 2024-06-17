@@ -13,7 +13,10 @@ export const getPartTimeTaxResult = (
 
   const levy = getMedicareLevy(taxableIncome);
 
-  const taxPayable = getIncomeTaxPayable(taxableIncome) - taxCredits;
+  let taxPayable = getIncomeTaxPayable(taxableIncome) - taxCredits;
+  if (taxPayable < 0) {
+    taxPayable = 0;
+  }
 
   const partTimeTaxResult = {
     annualIncome,

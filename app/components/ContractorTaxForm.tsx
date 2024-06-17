@@ -18,46 +18,43 @@ import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
 
 const FormSchema = z.object({
-  income: z
-    .string({ required_error: "Please input the income." })
+  dailyRate: z
+    .string({ required_error: "Please input the dailt rate." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Dailt rate must be a number.",
     })
     .transform((val) => parseFloat(val)),
-
   totalDays: z
-    .string({ required_error: "Please input the days." })
+    .string({ required_error: "Please input the total working days." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Total Days must be a number.",
+      message: "Total waorking Days must be a number.",
     })
     .transform((val) => parseFloat(val)),
   businessExpenses: z
-    .string({ required_error: "Please input the deductions." })
+    .string()
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Business Expenses must be a number.",
     })
     .transform((val) => parseFloat(val)),
-  taxCreditsAndConcessions: z
-    .string({ required_error: "Please input the taxCreditsAndConcessions." })
+  taxCredits: z
+    .string()
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Tax credits and concessions must be a number.",
     })
     .transform((val) => parseFloat(val)),
 });
 
 export function ContractorTaxForm() {
   const {
-    employmentType,
-    incomeType,
-    contractorDailyRate,
-    contractorTotalDays,
-    contractorBusinessExpenses,
-    contractorTaxCredits,
     setContractorDailyRate,
     setContractorTotalDays,
     setContractorBusinessExpenses,
     setContractorTaxCredits,
-    reset,
+    setContractorResult,
   } = useTaxStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -65,7 +62,7 @@ export function ContractorTaxForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    setContractorResult(data);
   }
 
   return (
@@ -77,15 +74,19 @@ export function ContractorTaxForm() {
       >
         <FormField
           control={form.control}
-          name="income"
+          name="dailyRate"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Daily rate</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Income"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setContractorDailyRate(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -101,9 +102,13 @@ export function ContractorTaxForm() {
               <FormLabel>Total Days</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Total Days"
+                  placeholder="0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setContractorTotalDays(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -119,9 +124,15 @@ export function ContractorTaxForm() {
               <FormLabel>Business Expenses</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Business Expenses"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setContractorBusinessExpenses(
+                      parseFloat(e.target.value) || 0
+                    );
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -131,15 +142,19 @@ export function ContractorTaxForm() {
 
         <FormField
           control={form.control}
-          name="taxCreditsAndConcessions"
+          name="taxCredits"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Tax Credits And Concessions"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setContractorTaxCredits(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />

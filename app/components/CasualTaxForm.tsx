@@ -18,45 +18,43 @@ import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
 
 const FormSchema = z.object({
-  income: z
-    .string({ required_error: "Please input the income." })
+  hourlyWage: z
+    .string({ required_error: "Please input the hourly wage." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Hourly wage must be a number.",
     })
     .transform((val) => parseFloat(val)),
-  TotalHours: z
-    .string({ required_error: "Please input the hours." })
+  totalHours: z
+    .string({ required_error: "Please input the working total hours." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Hours must be a number.",
+      message: "Working total hours must be a number.",
     })
     .transform((val) => parseFloat(val)),
   deductions: z
-    .string({ required_error: "Please input the deductions." })
+    .string()
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Deductions must be a number.",
     })
     .transform((val) => parseFloat(val)),
-  taxCreditsAndConcessions: z
-    .string({ required_error: "Please input the taxCreditsAndConcessions." })
+  taxCredits: z
+    .string()
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Tax credits and concessions must be a number.",
     })
     .transform((val) => parseFloat(val)),
 });
 
 export function CasualTaxForm() {
   const {
-    employmentType,
-    incomeType,
-    casualHourlyWage,
-    casualTotalHours,
-    casualDeductions,
-    casualTaxCredits,
     setCasualHourlyWage,
     setCasualTotalHours,
     setCasualDeductions,
     setCasualTaxCredits,
-    reset,
+    setCasualResult,
   } = useTaxStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -64,7 +62,7 @@ export function CasualTaxForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    setCasualResult(data);
   }
 
   return (
@@ -76,15 +74,19 @@ export function CasualTaxForm() {
       >
         <FormField
           control={form.control}
-          name="income"
+          name="hourlyWage"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Hourly wage</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Hourly wage"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setCasualHourlyWage(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -93,15 +95,19 @@ export function CasualTaxForm() {
         />
         <FormField
           control={form.control}
-          name="TotalHours"
+          name="totalHours"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Total hours</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Total hours"
+                  placeholder="0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setCasualTotalHours(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -117,9 +123,13 @@ export function CasualTaxForm() {
               <FormLabel>Deductions</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Deductions"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setCasualDeductions(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -129,15 +139,19 @@ export function CasualTaxForm() {
 
         <FormField
           control={form.control}
-          name="taxCreditsAndConcessions"
+          name="taxCredits"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Tax Credits And Concessions"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    setCasualTaxCredits(parseFloat(e.target.value) || 0);
+                  }}
                 />
               </FormControl>
               <FormMessage />

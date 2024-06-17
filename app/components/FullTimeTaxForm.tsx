@@ -33,45 +33,50 @@ const FormSchema = z.object({
     .refine((val) => !isNaN(parseFloat(val)), {
       message: "Income must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Income value must be non-negative",
+    }),
   deductions: z
     .string()
-    .min(1, "Please input the deductions.")
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
       message: "Deductions must be a number.",
     })
-    .transform((val) => parseFloat(val)),
-  taxCreditsAndConcessions: z
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Deductions must be non-negative",
+    }),
+  taxCredits: z
     .string()
-    .min(1, "Please input the tax credits and concessions.")
+    .optional()
+    .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
       message: "Tax credits and concessions must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Tax credits and concessions must be non-negative",
+    }),
 });
 
 export function FullTimeTaxForm() {
+  const {
+    incomeType,
+    setIncomeType,
+    setfullTimeIncome,
+    setFullTimeDeductions,
+    setFullTimeTaxCredits,
+    setFullTimeResult,
+  } = useTaxStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    setFullTimeResult(data);
   }
-
-  const {
-    employmentType,
-    incomeType,
-    fullTimeIncome,
-    fullTimeDeductions,
-    fullTimeTaxCredits,
-    setEmploymentType,
-    setIncomeType,
-    setfullTimeIncome,
-    setFullTimeDeductions,
-    setFullTimeTaxCredits,
-    reset,
-  } = useTaxStore();
 
   const dynamicIncomeType =
     incomeType.charAt(0).toUpperCase() + incomeType.slice(1) || "Annually";
@@ -120,7 +125,7 @@ export function FullTimeTaxForm() {
               <FormLabel>{`${dynamicIncomeType} salary`}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Income"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
                   onChange={(e) => {
@@ -142,7 +147,7 @@ export function FullTimeTaxForm() {
               <FormLabel>Deductions</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Deductions"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
                   onChange={(e) => {
@@ -158,13 +163,13 @@ export function FullTimeTaxForm() {
 
         <FormField
           control={form.control}
-          name="taxCreditsAndConcessions"
+          name="taxCredits"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tax Credits And Concessions</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Tax Credits And Concessions"
+                  placeholder="$0"
                   {...field}
                   value={field.value ?? ""}
                   onChange={(e) => {

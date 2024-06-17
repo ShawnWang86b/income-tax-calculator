@@ -19,60 +19,64 @@ import useTaxStore from "@/app/store/useStore";
 
 const FormSchema = z.object({
   hourlyWage: z
-    .string({ required_error: "Please input the income." })
+    .string({ required_error: "Please input the hourly wage." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Hourly wage must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Hourly wage value must be non-negative",
+    }),
   hoursPerWeek: z
-    .string({ required_error: "Please input the income." })
+    .string({ required_error: "Please input the working hours per week." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Working hours per week must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Working hours per week must be non-negative",
+    }),
   weeksPerYear: z
-    .string({ required_error: "Please input the income." })
+    .string({ required_error: "Please input the working weeks per year." })
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Working weeks per year must be a number.",
     })
     .transform((val) => parseFloat(val))
     .refine((val) => val >= 1 && val <= 52, {
-      message: "Weeks per year must be between 1 and 52.",
+      message: "Working weeks per year must be between 1 and 52.",
     }),
   deductions: z
     .string()
     .optional()
     .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Deductions must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Deductions must be non-negative",
+    }),
   taxCredits: z
     .string()
     .optional()
     .default("0")
     .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Income must be a number.",
+      message: "Tax credits and concessions must be a number.",
     })
-    .transform((val) => parseFloat(val)),
+    .transform((val) => parseFloat(val))
+    .refine((val) => val >= 0, {
+      message: "Tax credits and concessions must be non-negative",
+    }),
 });
 
 export function PartTimeTaxForm() {
   const {
-    employmentType,
-    incomeType,
-    partTimeHourlyWage,
-    partTimeHoursPerWeek,
-    partTimeWeeksPerYear,
-    partTimeDeductions,
-    partTimeTaxCredits,
     setPartTimeHourlyWage,
     setPartTimeHoursPerWeek,
     setPartTimeWeeksPerYear,
     setPartTimeDeductions,
     setPartTimeTaxCredits,
     setPartTimeResult,
-    reset,
   } = useTaxStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -80,7 +84,6 @@ export function PartTimeTaxForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     setPartTimeResult(data);
   }
 

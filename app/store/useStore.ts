@@ -1,4 +1,12 @@
 import { create } from "zustand";
+
+interface IFulltime {
+  incomeType: string;
+  income: number;
+  deductions: number;
+  taxCredits: number;
+}
+
 interface IPartime {
   hourlyWage: number;
   hoursPerWeek: number;
@@ -6,6 +14,21 @@ interface IPartime {
   deductions: number;
   taxCredits: number;
 }
+
+interface ICasual {
+  hourlyWage: number;
+  totalHours: number;
+  deductions: number;
+  taxCredits: number;
+}
+
+interface IContractor {
+  dailyRate: number;
+  totalDays: number;
+  businessExpenses: number;
+  taxCredits: number;
+}
+
 interface TaxState {
   employmentType: string;
   incomeType: string;
@@ -31,8 +54,8 @@ interface TaxState {
 
   fullTimeResult: any;
   partTimeResult: IPartime;
-  casualResult: any;
-  contractorResult: any;
+  casualResult: ICasual;
+  contractorResult: IContractor;
 
   reset: () => void;
   setEmploymentType: (employmentType: string) => void;
@@ -58,10 +81,10 @@ interface TaxState {
   setContractorBusinessExpenses: (contractorBusinessExpenses: number) => void;
   setContractorTaxCredits: (contractorTaxCredits: number) => void;
 
-  setFullTimeResult: (fullTimeResult: number) => void;
+  setFullTimeResult: (fullTimeResult: IFulltime) => void;
   setPartTimeResult: (partTimeResult: IPartime) => void;
-  setCasualResult: (casualResult: number) => void;
-  setContractorResult: (contractorResult: number) => void;
+  setCasualResult: (casualResult: ICasual) => void;
+  setContractorResult: (contractorResult: IContractor) => void;
 }
 
 const initialState = {
@@ -88,7 +111,7 @@ const initialState = {
   contractorBusinessExpenses: 0,
   contractorTaxCredits: 0,
 
-  fullTimeResult: {},
+  fullTimeResult: { incomeType: 0, income: 0, deductions: 0, taxCredits: 0 },
   partTimeResult: {
     hourlyWage: 0,
     hoursPerWeek: 0,
@@ -96,8 +119,18 @@ const initialState = {
     deductions: 0,
     taxCredits: 0,
   },
-  casualResult: {},
-  contractorResult: {},
+  casualResult: {
+    hourlyWage: 0,
+    totalHours: 0,
+    deductions: 0,
+    taxCredits: 0,
+  },
+  contractorResult: {
+    dailyRate: 0,
+    totalDays: 0,
+    businessExpenses: 0,
+    taxCredits: 0,
+  },
 };
 
 const useTaxStore = create<TaxState>((set) => ({
