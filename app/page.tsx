@@ -38,7 +38,7 @@ export default function Home() {
       <MobileHeader />
       <SideBar className="hidden lg:flex" />
       <main className="flex h-screen lg:pl-[280px]">
-        @ts-ignore
+        {/* @ts-ignore */}
         <ResizablePanelGroup direction={direction} className="rounded-md">
           <ResizablePanel defaultSize={35}>
             <div className="flex justify-center items-start h-screen pt-16 lg:pt-4 px-4 overflow-auto">
