@@ -52,10 +52,12 @@ interface TaxState {
   contractorBusinessExpenses: number;
   contractorTaxCredits: number;
 
-  fullTimeResult: any;
+  fullTimeResult: IFulltime;
   partTimeResult: IPartime;
   casualResult: ICasual;
   contractorResult: IContractor;
+  multiworksResult: Array<IFulltime | IPartime | ICasual | IContractor>;
+  canAddResult: boolean;
 
   reset: () => void;
   setEmploymentType: (employmentType: string) => void;
@@ -111,7 +113,7 @@ const initialState = {
   contractorBusinessExpenses: 0,
   contractorTaxCredits: 0,
 
-  fullTimeResult: { incomeType: 0, income: 0, deductions: 0, taxCredits: 0 },
+  fullTimeResult: { incomeType: "", income: 0, deductions: 0, taxCredits: 0 },
   partTimeResult: {
     hourlyWage: 0,
     hoursPerWeek: 0,
@@ -131,6 +133,8 @@ const initialState = {
     businessExpenses: 0,
     taxCredits: 0,
   },
+  multiworksResult: [],
+  canAddResult: true,
 };
 
 const useTaxStore = create<TaxState>((set) => ({

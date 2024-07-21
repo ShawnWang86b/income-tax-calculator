@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         formSubmit:
-          "bg-[#874ac4] text-secondary-foreground text-white uppercase tracking-wider hover:bg-[#874ac4]/80",
+          "bg-themePrimary text-white uppercase tracking-wider hover:bg-themePrimaryHover",
       },
       size: {
         default: "h-10 px-4 py-2",
