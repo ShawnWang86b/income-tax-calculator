@@ -1,0 +1,182 @@
+{
+  "2024": {
+    "resident": [
+      { "threshold": 190000, "rate": 0.45, "baseTax": 51638 },
+      { "threshold": 135000, "rate": 0.37, "baseTax": 31288 },
+      { "threshold": 45000, "rate": 0.3, "baseTax": 4288 },
+      { "threshold": 18200, "rate": 0.16, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 190000, "rate": 0.45, "baseTax": 54100 },
+      { "threshold": 135000, "rate": 0.37, "baseTax": 33750 },
+      { "threshold": 45000, "rate": 0.3, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 190000, "rate": 0.45, "baseTax": 60850 },
+      { "threshold": 135000, "rate": 0.37, "baseTax": 40500 },
+      { "threshold": 0, "rate": 0.3, "baseTax": 0 }
+    ]
+  },
+  "2023": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 61200 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 39000 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2022": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 61200 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 39000 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2021": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 61200 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 39000 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2020": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 61200 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 39000 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2019": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 62550 },
+      { "threshold": 90000, "rate": 0.37, "baseTax": 29250 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2018": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 29467 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 5092 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 120000, "rate": 0.37, "baseTax": 31125 },
+      { "threshold": 45000, "rate": 0.325, "baseTax": 6750 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 62550 },
+      { "threshold": 90000, "rate": 0.37, "baseTax": 29250 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2017": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 19822 },
+      { "threshold": 37000, "rate": 0.325, "baseTax": 3572 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 19822 },
+      { "threshold": 37000, "rate": 0.325, "baseTax": 3572 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 62685 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 28275 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  },
+  "2016": {
+    "resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 51667 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 19822 },
+      { "threshold": 37000, "rate": 0.325, "baseTax": 3572 },
+      { "threshold": 18200, "rate": 0.19, "baseTax": 0 },
+      { "threshold": 0, "rate": 0, "baseTax": 0 }
+    ],
+    "whm": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 53325 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 19822 },
+      { "threshold": 37000, "rate": 0.325, "baseTax": 3572 },
+      { "threshold": 0, "rate": 0.15, "baseTax": 0 }
+    ],
+    "non-resident": [
+      { "threshold": 180000, "rate": 0.45, "baseTax": 62685 },
+      { "threshold": 87000, "rate": 0.37, "baseTax": 28275 },
+      { "threshold": 0, "rate": 0.325, "baseTax": 0 }
+    ]
+  }
+}

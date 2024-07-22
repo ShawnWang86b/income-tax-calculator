@@ -31,6 +31,7 @@ interface IContractor {
 
 interface TaxState {
   employmentType: string;
+  incomeYear: string;
   incomeType: string;
   fullTimeIncome: number;
   fullTimeDeductions: number;
@@ -60,6 +61,7 @@ interface TaxState {
   canAddResult: boolean;
 
   reset: () => void;
+  setIncomeYear: (incomeYear: string) => void;
   setEmploymentType: (employmentType: string) => void;
   setIncomeType: (incomeType: string) => void;
 
@@ -91,6 +93,7 @@ interface TaxState {
 
 const initialState = {
   employmentType: "full-time",
+  incomeYear: "",
   incomeType: "annually",
 
   fullTimeIncome: 0,
@@ -143,6 +146,7 @@ const useTaxStore = create<TaxState>((set) => ({
     set(initialState);
   },
   setEmploymentType: (employmentType) => set(() => ({ employmentType })),
+  setIncomeYear: (incomeYear) => set(() => ({ incomeYear })),
   setIncomeType: (incomeType) => set(() => ({ incomeType })),
 
   setfullTimeIncome: (fullTimeIncome) => set(() => ({ fullTimeIncome })),

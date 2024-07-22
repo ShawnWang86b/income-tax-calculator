@@ -19,8 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
+import { useState } from "react";
 
 const FormSchema = z.object({
   incomeType: z
@@ -37,6 +44,7 @@ const FormSchema = z.object({
     .refine((val) => val >= 0, {
       message: "Income value must be non-negative",
     }),
+  superRate: z.string(),
   deductions: z
     .string()
     .optional()
@@ -62,6 +70,10 @@ const FormSchema = z.object({
 });
 
 export function FullTimeTaxForm() {
+  const [activeSalaryTypeTab, setActiveSalaryTypeTab] = useState("Base salary");
+  const [activeResidentTab, setActiveResidentTab] = useState(
+    "Australian resident"
+  );
   const {
     incomeType,
     setIncomeType,
@@ -70,6 +82,27 @@ export function FullTimeTaxForm() {
     setFullTimeTaxCredits,
     setFullTimeResult,
   } = useTaxStore();
+
+  const handleTabClick = (tabName: string) => {
+    setActiveSalaryTypeTab(tabName);
+  };
+
+  const handleResidentTabClick = (tabName: string) => {
+    setActiveResidentTab(tabName);
+  };
+
+  const getTabClass = (tabName: string) => {
+    return tabName === activeSalaryTypeTab
+      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5"
+      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5";
+  };
+
+  const getResidentTabClass = (tabName: string) => {
+    return tabName === activeResidentTab
+      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5"
+      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5";
+  };
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -93,7 +126,7 @@ export function FullTimeTaxForm() {
           name="incomeType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Pay cycle</FormLabel>
+              <FormLabel>Pay cycle *</FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
@@ -122,7 +155,27 @@ export function FullTimeTaxForm() {
           name="income"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`${dynamicIncomeType} salary`}</FormLabel>
+              <FormLabel>{`${dynamicIncomeType} salary *`}</FormLabel>
+              <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-flow-col w-[100%] lg:w-[100%] h-[90px] lg:h-[40px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
+                <div
+                  className={getTabClass("Base salary")}
+                  onClick={() => handleTabClick("Base salary")}
+                >
+                  Base salary
+                </div>
+                <div
+                  className={getTabClass("Package")}
+                  onClick={() => handleTabClick("Package")}
+                >
+                  Package
+                </div>
+                <div
+                  className={getTabClass("In hand")}
+                  onClick={() => handleTabClick("In hand")}
+                >
+                  In hand
+                </div>
+              </div>
               <FormControl>
                 <Input
                   placeholder="$0"
@@ -138,21 +191,43 @@ export function FullTimeTaxForm() {
             </FormItem>
           )}
         />
-
+        <FormItem>
+          <FormLabel>Resident type *</FormLabel>
+          <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-flow-col w-[100%] lg:w-[100%] h-[90px] lg:h-[44px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
+            <div
+              className={getResidentTabClass("Australian resident")}
+              onClick={() => handleResidentTabClick("Australian resident")}
+            >
+              Australian resident
+            </div>
+            <div
+              className={getResidentTabClass("Foreign resident")}
+              onClick={() => handleResidentTabClick("Foreign resident")}
+            >
+              Foreign resident
+            </div>
+            <div
+              className={getResidentTabClass("Working holiday makers")}
+              onClick={() => handleResidentTabClick("Working holiday makers")}
+            >
+              Working holiday makers
+            </div>
+          </div>
+        </FormItem>
         <FormField
           control={form.control}
-          name="deductions"
+          name="superRate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Deductions</FormLabel>
+              <FormLabel>Super rate</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="$0"
+                  placeholder="10.5"
                   {...field}
                   value={field.value ?? ""}
                   onChange={(e) => {
                     field.onChange(e.target.value);
-                    setFullTimeDeductions(parseFloat(e.target.value) || 0);
+                    // setFullTimeDeductions(parseFloat(e.target.value) || 0);
                   }}
                 />
               </FormControl>
@@ -161,28 +236,62 @@ export function FullTimeTaxForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="taxCredits"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tax Credits And Concessions</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="$0"
-                  {...field}
-                  value={field.value ?? ""}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    setFullTimeTaxCredits(parseFloat(e.target.value) || 0);
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>
+              Tax deductions, credits and concessions
+            </AccordionTrigger>
+            <AccordionContent>
+              <FormField
+                control={form.control}
+                name="deductions"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Deductions</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="$0"
+                        {...field}
+                        value={field.value ?? ""}
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                          setFullTimeDeductions(
+                            parseFloat(e.target.value) || 0
+                          );
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
+              <FormField
+                control={form.control}
+                name="taxCredits"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tax credits and concessions</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="$0"
+                        {...field}
+                        value={field.value ?? ""}
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                          setFullTimeTaxCredits(
+                            parseFloat(e.target.value) || 0
+                          );
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
         <Button variant="formSubmit" type="submit">
           Submit
         </Button>

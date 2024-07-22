@@ -1,0 +1,56 @@
+{
+  "2024": [
+    { "threshold": 97000, "rate": 0 },
+    { "threshold": 113000, "rate": 0.01 },
+    { "threshold": 151000, "rate": 0.0125 },
+    { "threshold": 151001, "rate": 0.015 }
+  ],
+  "2023": [
+    { "threshold": 93000, "rate": 0 },
+    { "threshold": 108000, "rate": 0.01 },
+    { "threshold": 144000, "rate": 0.0125 },
+    { "threshold": 144001, "rate": 0.015 }
+  ],
+  "2022": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2021": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2020": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2019": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2018": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2017": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ],
+  "2016": [
+    { "threshold": 90000, "rate": 0 },
+    { "threshold": 105000, "rate": 0.01 },
+    { "threshold": 140000, "rate": 0.0125 },
+    { "threshold": 140001, "rate": 0.015 }
+  ]
+}
