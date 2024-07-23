@@ -11,7 +11,7 @@ const SideBar = ({ className }: Props) => {
   return (
     <aside
       className={cn(
-        "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-[1px] border-slate-200 flex-col bg-muted",
+        "flex h-full xl:w-[280px] xl:fixed left-0 top-0 px-6 border-r-[1px] border-slate-200 flex-col bg-muted",
         className
       )}
     >

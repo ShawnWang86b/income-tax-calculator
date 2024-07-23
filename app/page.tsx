@@ -30,6 +30,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Switch } from "@/components/ui/switch";
 import { CircleHelp } from "lucide-react";
 import MobileHeader from "./components/MobileHeader";
 import { useEffect, useState } from "react";
@@ -51,12 +52,12 @@ export default function Home() {
   return (
     <>
       <MobileHeader />
-      <SideBar className="hidden lg:flex" />
-      <main className="flex h-screen lg:pl-[280px]">
+      <SideBar className="hidden xl:flex" />
+      <main className="flex h-screen xl:pl-[280px]">
         {/* @ts-ignore */}
         <ResizablePanelGroup direction={direction} className="rounded-md">
           <ResizablePanel defaultSize={35}>
-            <div className="flex justify-center items-start h-screen pt-16 lg:pt-4 px-4 scroll-container">
+            <div className="flex justify-center items-start pt-16 xl:pt-4 px-4 h-[100%] scroll-container">
               <section className="min-w-96 flex flex-col justify-center items-start px-10 border-[1px] border-slate-200 bg-muted py-5 w-full">
                 <div className="flex justify-between w-full">
                   <div className="text-xl font-semibold">
@@ -109,7 +110,7 @@ export default function Home() {
                     </SheetContent>
                   </Sheet>
                 </div>
-                <div className="border-b-2 border-themePrimary w-full py-2"></div>
+                <div className="border-b-2 border-themePrimary w-full py-1"></div>
                 <p className="text-sm pt-2">
                   All fields marked with * are mandatory
                 </p>
@@ -129,7 +130,7 @@ export default function Home() {
           <ResizablePanel defaultSize={65}>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel defaultSize={60}>
-                <section className="w-full p-4 h-[100%] scroll-container">
+                <section className="w-full pt-16 xl:pt-4 h-[100%] scroll-container">
                   {employmentType === "full-time" && <FullTimeTable />}
                   {employmentType === "part-time" && <PartTimeTable />}
                   {employmentType === "casual" && <CasualTable />}

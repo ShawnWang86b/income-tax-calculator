@@ -28,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
 import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
 
 const FormSchema = z.object({
   incomeType: z
@@ -67,6 +68,7 @@ const FormSchema = z.object({
     .refine((val) => val >= 0, {
       message: "Tax credits and concessions must be non-negative",
     }),
+  holdPrivateInsurance: z.boolean().default(false).optional(),
 });
 
 export function FullTimeTaxForm() {
@@ -93,14 +95,14 @@ export function FullTimeTaxForm() {
 
   const getTabClass = (tabName: string) => {
     return tabName === activeSalaryTypeTab
-      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5"
-      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5";
+      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 xl:pt-2.5"
+      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 xl:pt-2.5";
   };
 
   const getResidentTabClass = (tabName: string) => {
     return tabName === activeResidentTab
-      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5"
-      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 lg:pt-2.5";
+      ? "cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 xl:pt-3.5 text-xs"
+      : "cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 xl:pt-3.5  text-xs";
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -119,7 +121,7 @@ export function FullTimeTaxForm() {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         autoComplete="off"
-        className="w-2/3 space-y-6 pt-4"
+        className="w-2/3 space-y-6 pt-4 "
       >
         <FormField
           control={form.control}
@@ -156,7 +158,7 @@ export function FullTimeTaxForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{`${dynamicIncomeType} salary *`}</FormLabel>
-              <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-flow-col w-[100%] lg:w-[100%] h-[90px] lg:h-[40px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
+              <div className="grid grid-rows-3 xl:grid-rows-1 xl:grid-flow-col w-[100%] xl:w-[120%] h-[90px] xl:h-[40px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
                 <div
                   className={getTabClass("Base salary")}
                   onClick={() => handleTabClick("Base salary")}
@@ -193,7 +195,7 @@ export function FullTimeTaxForm() {
         />
         <FormItem>
           <FormLabel>Resident type *</FormLabel>
-          <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-flow-col w-[100%] lg:w-[100%] h-[90px] lg:h-[44px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
+          <div className="grid grid-rows-3 xl:grid-rows-1 xl:grid-flow-col w-[100%] xl:w-[120%] h-[90px] xl:h-[44px] xl:text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
             <div
               className={getResidentTabClass("Australian resident")}
               onClick={() => handleResidentTabClick("Australian resident")}
@@ -210,7 +212,7 @@ export function FullTimeTaxForm() {
               className={getResidentTabClass("Working holiday makers")}
               onClick={() => handleResidentTabClick("Working holiday makers")}
             >
-              Working holiday makers
+              working holiday
             </div>
           </div>
         </FormItem>
@@ -235,63 +237,91 @@ export function FullTimeTaxForm() {
             </FormItem>
           )}
         />
-
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>
-              Tax deductions, credits and concessions
-            </AccordionTrigger>
-            <AccordionContent>
-              <FormField
-                control={form.control}
-                name="deductions"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Deductions</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="$0"
-                        {...field}
-                        value={field.value ?? ""}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                          setFullTimeDeductions(
-                            parseFloat(e.target.value) || 0
-                          );
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="taxCredits"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tax credits and concessions</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="$0"
-                        {...field}
-                        value={field.value ?? ""}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                          setFullTimeTaxCredits(
-                            parseFloat(e.target.value) || 0
-                          );
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <div className="flex flex-col">
+          <Accordion type="single" collapsible className="w-[120%]">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                Tax deductions, credits and concessions
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-5">
+                  <FormField
+                    control={form.control}
+                    name="deductions"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Deductions</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="$0"
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(e) => {
+                              field.onChange(e.target.value);
+                              setFullTimeDeductions(
+                                parseFloat(e.target.value) || 0
+                              );
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="taxCredits"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tax credits and concessions</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="$0"
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(e) => {
+                              field.onChange(e.target.value);
+                              setFullTimeTaxCredits(
+                                parseFloat(e.target.value) || 0
+                              );
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible className="w-[120%]">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Medicare levy surcharge</AccordionTrigger>
+              <AccordionContent>
+                <FormField
+                  control={form.control}
+                  name="holdPrivateInsurance"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-2">
+                      <div className="space-y-0.5">
+                        <FormLabel className="text-sm">
+                          Private hospital cover
+                        </FormLabel>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
         <Button variant="formSubmit" type="submit">
           Submit
         </Button>
