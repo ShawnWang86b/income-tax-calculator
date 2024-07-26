@@ -46,6 +46,7 @@ export function IncomeYearForm() {
                   field.onChange(value);
                   setIncomeYear(value);
                 }}
+                defaultValue={"2024"}
               >
                 <FormControl>
                   <SelectTrigger>

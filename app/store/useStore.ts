@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
 interface IFulltime {
+  incomeYear: string;
   incomeType: string;
   income: number;
+  activeResidentTab: string;
   deductions: number;
   taxCredits: number;
 }
@@ -93,7 +95,7 @@ interface TaxState {
 
 const initialState = {
   employmentType: "full-time",
-  incomeYear: "",
+  incomeYear: "2024",
   incomeType: "annually",
 
   fullTimeIncome: 0,
@@ -116,7 +118,14 @@ const initialState = {
   contractorBusinessExpenses: 0,
   contractorTaxCredits: 0,
 
-  fullTimeResult: { incomeType: "", income: 0, deductions: 0, taxCredits: 0 },
+  fullTimeResult: {
+    incomeYear: "",
+    incomeType: "",
+    income: 0,
+    activeResidentTab: "",
+    deductions: 0,
+    taxCredits: 0,
+  },
   partTimeResult: {
     hourlyWage: 0,
     hoursPerWeek: 0,

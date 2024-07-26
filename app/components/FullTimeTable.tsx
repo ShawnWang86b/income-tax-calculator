@@ -6,11 +6,20 @@ import { formatNumber } from "@/app/utils/formatNumber";
 
 export function FullTimeTable() {
   const { fullTimeResult } = useTaxStore();
-  const { incomeType, income, deductions, taxCredits } = fullTimeResult;
-
-  const fullTimeTaxResult = getFullTimeTaxResult(
+  const {
+    incomeYear,
     incomeType,
     income,
+    activeResidentTab,
+    deductions,
+    taxCredits,
+  } = fullTimeResult;
+
+  const fullTimeTaxResult = getFullTimeTaxResult(
+    incomeYear,
+    incomeType,
+    income,
+    activeResidentTab,
     deductions,
     taxCredits
   );

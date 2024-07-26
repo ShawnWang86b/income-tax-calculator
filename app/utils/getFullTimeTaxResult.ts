@@ -2,8 +2,10 @@ import { getIncomeTaxPayable } from "./getIncomeTaxPayable";
 import { getMedicareLevy } from "./getMedicareLevy";
 
 export const getFullTimeTaxResult = (
+  incomeYear: string,
   incomeType: string,
   income: number,
+  activeResidentTab: string,
   deductions: number,
   taxCredits: number
 ) => {
@@ -21,7 +23,9 @@ export const getFullTimeTaxResult = (
 
   const levy = getMedicareLevy(taxableIncome);
 
-  let taxPayable = getIncomeTaxPayable(taxableIncome) - taxCredits;
+  let taxPayable =
+    getIncomeTaxPayable(taxableIncome, incomeYear, activeResidentTab) -
+    taxCredits;
   if (taxPayable < 0) {
     taxPayable = 0;
   }

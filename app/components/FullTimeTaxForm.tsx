@@ -27,8 +27,11 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import useTaxStore from "@/app/store/useStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
+import superRatesList from "@/app/data/superRates.json";
+import { getTaxableIncomeAnnually } from "../utils/getTaxableIncomeAnnually";
+import { getIncomeTaxPayable } from "../utils/getIncomeTaxPayable";
 
 const FormSchema = z.object({
   incomeType: z
@@ -45,7 +48,9 @@ const FormSchema = z.object({
     .refine((val) => val >= 0, {
       message: "Income value must be non-negative",
     }),
-  superRate: z.string(),
+  superRate: z.number().refine((val) => val >= 0, {
+    message: "Super rate must be non-negative",
+  }),
   deductions: z
     .string()
     .optional()
@@ -77,13 +82,26 @@ export function FullTimeTaxForm() {
     "Australian resident"
   );
   const {
+    employmentType,
     incomeType,
+    incomeYear,
     setIncomeType,
+    fullTimeIncome,
     setfullTimeIncome,
     setFullTimeDeductions,
     setFullTimeTaxCredits,
     setFullTimeResult,
   } = useTaxStore();
+
+  const getIncomeYearSuperRate = (incomeYear: string): number => {
+    const foundData = superRatesList.find((data) => data.value === incomeYear);
+    if (!foundData) {
+      throw new Error(`No super rate found for income year: ${incomeYear}`);
+    }
+    return foundData.rate;
+  };
+
+  const currentSuperRate = getIncomeYearSuperRate(incomeYear);
 
   const handleTabClick = (tabName: string) => {
     setActiveSalaryTypeTab(tabName);
@@ -107,10 +125,31 @@ export function FullTimeTaxForm() {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      superRate: currentSuperRate,
+      holdPrivateInsurance: false,
+    },
   });
+  useEffect(() => {
+    form.setValue("superRate", getIncomeYearSuperRate(incomeYear));
+  }, [incomeYear, form]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setFullTimeResult(data);
+    const fullData = {
+      ...data,
+      incomeYear,
+      activeSalaryTypeTab,
+      activeResidentTab,
+      employmentType,
+    };
+    console.log("full-data", fullData);
+    setFullTimeResult(fullData);
+    const abc = getIncomeTaxPayable(
+      fullTimeIncome,
+      incomeYear,
+      activeResidentTab
+    );
+    console.log("abc", abc);
   }
 
   const dynamicIncomeType =
@@ -221,10 +260,9 @@ export function FullTimeTaxForm() {
           name="superRate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Super rate</FormLabel>
+              <FormLabel>Super rate *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="10.5"
                   {...field}
                   value={field.value ?? ""}
                   onChange={(e) => {
