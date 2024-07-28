@@ -1,6 +1,17 @@
 import { getIncomeTaxPayable } from "./getIncomeTaxPayable";
 import { getMedicareLevy } from "./getMedicareLevy";
 
+/**
+ * Calculates the result of Full time work
+ *
+ * @param {string} incomeYear - "2024"
+ * @param {string} incomeType - "annually","monthly"
+ * @param {number} income - 100000
+ * @param {string} activeResidentTab - "Australian resident"
+ * @param {number} deductions - 0
+ * @param {number} taxCredits - 0
+ */
+
 export const getFullTimeTaxResult = (
   incomeYear: string,
   incomeType: string,
@@ -9,6 +20,14 @@ export const getFullTimeTaxResult = (
   deductions: number,
   taxCredits: number
 ) => {
+  console.log(1111, {
+    incomeYear,
+    incomeType,
+    income,
+    activeResidentTab,
+    deductions,
+    taxCredits,
+  });
   let annualIncome;
   if (incomeType === "annually") {
     annualIncome = income;
@@ -39,6 +58,10 @@ export const getFullTimeTaxResult = (
     monthlyTaxableIncome: taxableIncome / 12,
     monthlylevy: levy / 12,
     monthlyTaxPayable: taxPayable / 12,
+    weeklyIncome: annualIncome / 52,
+    weeklyTaxableIncome: taxableIncome / 52,
+    weeklylevy: levy / 52,
+    weeklyTaxPayable: taxPayable / 52,
   };
 
   return fullTimeTaxResult;

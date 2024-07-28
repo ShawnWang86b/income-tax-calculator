@@ -4,13 +4,13 @@ import useTaxStore from "@/app/store/useStore";
 import { EmploymentTypeForm } from "@/app/components/EmploymentTypeForm";
 import { PartTimeTaxForm } from "@/app/components/PartTimeTaxForm";
 import { FullTimeTaxForm } from "@/app/components/FullTimeTaxForm";
-import { CasualTaxForm } from "./components/CasualTaxForm";
-import { ContractorTaxForm } from "./components/ContractorTaxForm";
-import { FullTimeTable } from "./components/FullTimeTable";
-import { PartTimeTable } from "./components/PartTimeTable";
-import { CasualTable } from "./components/CasualTable";
-import { ContractorTable } from "./components/ContractorTable";
-import SideBar from "./components/SideBar";
+import { CasualTaxForm } from "@/app/components/CasualTaxForm";
+import { ContractorTaxForm } from "@/app/components/ContractorTaxForm";
+import { FullTimeTable } from "@/app/components/FullTimeTable";
+import { PartTimeTable } from "@/app/components/PartTimeTable";
+import { CasualTable } from "@/app/components/CasualTable";
+import { ContractorTable } from "@/app/components/ContractorTable";
+import SideBar from "@/app/components/SideBar";
 import {
   Sheet,
   SheetContent,
@@ -30,11 +30,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Switch } from "@/components/ui/switch";
 import { CircleHelp } from "lucide-react";
-import MobileHeader from "./components/MobileHeader";
+import MobileHeader from "@/app/components/MobileHeader";
 import { useEffect, useState } from "react";
-import { IncomeYearForm } from "./components/IncomeYearForm";
+import { IncomeYearForm } from "@/app/components/IncomeYearForm";
+import Chart from "@/app/components/Chart";
 
 export default function Home() {
   const { employmentType } = useTaxStore();
@@ -139,7 +139,9 @@ export default function Home() {
               </ResizablePanel>
               <ResizableHandle withHandle />
               <ResizablePanel defaultSize={40}>
-                <span className="font-semibold">Three</span>
+                <span className="font-semibold">
+                  <Chart />
+                </span>
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

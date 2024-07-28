@@ -3,8 +3,10 @@ import { create } from "zustand";
 interface IFulltime {
   incomeYear: string;
   incomeType: string;
+  activeSalaryTypeTab: string;
   income: number;
   activeResidentTab: string;
+  superRate: number;
   deductions: number;
   taxCredits: number;
 }
@@ -121,8 +123,10 @@ const initialState = {
   fullTimeResult: {
     incomeYear: "",
     incomeType: "",
+    activeSalaryTypeTab: "",
     income: 0,
     activeResidentTab: "",
+    superRate: 0,
     deductions: 0,
     taxCredits: 0,
   },

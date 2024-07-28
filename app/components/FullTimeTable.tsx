@@ -3,6 +3,7 @@
 import useTaxStore from "@/app/store/useStore";
 import { getFullTimeTaxResult } from "@/app/utils/getFullTimeTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
+import { getBaseSalary } from "@/app/utils/getBaseSalary";
 
 export function FullTimeTable() {
   const { fullTimeResult } = useTaxStore();
@@ -10,15 +11,27 @@ export function FullTimeTable() {
     incomeYear,
     incomeType,
     income,
+    activeSalaryTypeTab,
     activeResidentTab,
+    superRate,
     deductions,
     taxCredits,
   } = fullTimeResult;
 
+  // Get annually base salary before tax
+  const baseSalary = getBaseSalary(
+    income,
+    activeSalaryTypeTab,
+    superRate,
+    incomeYear,
+    activeResidentTab,
+    deductions
+  );
+
   const fullTimeTaxResult = getFullTimeTaxResult(
     incomeYear,
     incomeType,
-    income,
+    baseSalary,
     activeResidentTab,
     deductions,
     taxCredits
