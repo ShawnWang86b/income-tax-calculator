@@ -1,5 +1,6 @@
-import { getIncomeTaxPayable } from "./getIncomeTaxPayable";
-import { getMedicareLevy } from "./getMedicareLevy";
+import { getIncomeTaxPayable } from "@/app/utils/getIncomeTaxPayable";
+import { getMedicalLevySurcharge } from "@/app/utils/getMedicalLevySurchage";
+import { getMedicareLevy } from "@/app/utils/getMedicareLevy";
 
 /**
  * Calculates the result of Full time work
@@ -18,7 +19,8 @@ export const getFullTimeTaxResult = (
   income: number,
   activeResidentTab: string,
   deductions: number,
-  taxCredits: number
+  taxCredits: number,
+  holdPrivateInsurance: boolean
 ) => {
   console.log(1111, {
     incomeYear,
@@ -49,19 +51,33 @@ export const getFullTimeTaxResult = (
     taxPayable = 0;
   }
 
+  let medicalLevySurcharge;
+  if (holdPrivateInsurance === true) {
+    medicalLevySurcharge = 0;
+  } else {
+    medicalLevySurcharge = getMedicalLevySurcharge(
+      income,
+      incomeYear,
+      activeResidentTab
+    );
+  }
+  console.log("medicalLevySurcharge", medicalLevySurcharge);
   const fullTimeTaxResult = {
     annualIncome,
     taxableIncome,
     levy,
     taxPayable,
+    medicalLevySurcharge,
     monthlyIncome: annualIncome / 12,
     monthlyTaxableIncome: taxableIncome / 12,
     monthlylevy: levy / 12,
     monthlyTaxPayable: taxPayable / 12,
+    monthlyMedicalLevySurcharge: medicalLevySurcharge / 12,
     weeklyIncome: annualIncome / 52,
     weeklyTaxableIncome: taxableIncome / 52,
     weeklylevy: levy / 52,
     weeklyTaxPayable: taxPayable / 52,
+    weeklyMedicalLevySurcharge: medicalLevySurcharge / 52,
   };
 
   return fullTimeTaxResult;

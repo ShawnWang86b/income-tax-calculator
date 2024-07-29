@@ -9,6 +9,7 @@ interface IFulltime {
   superRate: number;
   deductions: number;
   taxCredits: number;
+  holdPrivateInsurance: boolean;
 }
 
 interface IPartime {
@@ -61,6 +62,7 @@ interface TaxState {
   partTimeResult: IPartime;
   casualResult: ICasual;
   contractorResult: IContractor;
+
   multiworksResult: Array<IFulltime | IPartime | ICasual | IContractor>;
   canAddResult: boolean;
 
@@ -129,6 +131,7 @@ const initialState = {
     superRate: 0,
     deductions: 0,
     taxCredits: 0,
+    holdPrivateInsurance: false,
   },
   partTimeResult: {
     hourlyWage: 0,

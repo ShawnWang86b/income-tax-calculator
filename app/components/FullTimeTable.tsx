@@ -16,6 +16,7 @@ export function FullTimeTable() {
     superRate,
     deductions,
     taxCredits,
+    holdPrivateInsurance,
   } = fullTimeResult;
 
   // Get annually base salary before tax
@@ -34,7 +35,8 @@ export function FullTimeTable() {
     baseSalary,
     activeResidentTab,
     deductions,
-    taxCredits
+    taxCredits,
+    holdPrivateInsurance
   );
 
   // annually income in hand

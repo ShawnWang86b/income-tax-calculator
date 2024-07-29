@@ -139,9 +139,9 @@ export default function Home() {
               </ResizablePanel>
               <ResizableHandle withHandle />
               <ResizablePanel defaultSize={40}>
-                <span className="font-semibold">
+                <div className="font-semibold w-[100%] flex justify-center items-center">
                   <Chart />
-                </span>
+                </div>
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

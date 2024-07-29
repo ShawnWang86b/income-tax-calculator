@@ -141,14 +141,15 @@ export function FullTimeTaxForm() {
       activeSalaryTypeTab,
       activeResidentTab,
       employmentType,
+      // holdPrivateInsurance,
     };
-
+    console.log("fullData1111", fullData);
     setFullTimeResult(fullData);
-    const abc = getIncomeTaxPayable(
-      fullTimeIncome,
-      incomeYear,
-      activeResidentTab
-    );
+    // const abc = getIncomeTaxPayable(
+    //   fullTimeIncome,
+    //   incomeYear,
+    //   activeResidentTab
+    // );
   }
 
   const dynamicIncomeType =
