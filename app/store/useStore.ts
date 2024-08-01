@@ -10,28 +10,8 @@ interface IFulltime {
   deductions: number;
   taxCredits: number;
   holdPrivateInsurance: boolean;
-}
-
-interface IPartime {
-  hourlyWage: number;
-  hoursPerWeek: number;
-  weeksPerYear: number;
-  deductions: number;
-  taxCredits: number;
-}
-
-interface ICasual {
-  hourlyWage: number;
-  totalHours: number;
-  deductions: number;
-  taxCredits: number;
-}
-
-interface IContractor {
-  dailyRate: number;
-  totalDays: number;
-  businessExpenses: number;
-  taxCredits: number;
+  totalWorkingDays?: number;
+  totalWorkingHours?: number;
 }
 
 interface TaxState {
@@ -59,11 +39,7 @@ interface TaxState {
   contractorTaxCredits: number;
 
   fullTimeResult: IFulltime;
-  partTimeResult: IPartime;
-  casualResult: ICasual;
-  contractorResult: IContractor;
 
-  multiworksResult: Array<IFulltime | IPartime | ICasual | IContractor>;
   canAddResult: boolean;
 
   reset: () => void;
@@ -92,9 +68,6 @@ interface TaxState {
   setContractorTaxCredits: (contractorTaxCredits: number) => void;
 
   setFullTimeResult: (fullTimeResult: IFulltime) => void;
-  setPartTimeResult: (partTimeResult: IPartime) => void;
-  setCasualResult: (casualResult: ICasual) => void;
-  setContractorResult: (contractorResult: IContractor) => void;
 }
 
 const initialState = {
@@ -198,9 +171,6 @@ const useTaxStore = create<TaxState>((set) => ({
     set(() => ({ contractorTaxCredits })),
 
   setFullTimeResult: (fullTimeResult) => set(() => ({ fullTimeResult })),
-  setPartTimeResult: (partTimeResult) => set(() => ({ partTimeResult })),
-  setCasualResult: (casualResult) => set(() => ({ casualResult })),
-  setContractorResult: (contractorResult) => set(() => ({ contractorResult })),
 }));
 
 export default useTaxStore;

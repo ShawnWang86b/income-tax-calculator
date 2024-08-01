@@ -20,27 +20,36 @@ export const getFullTimeTaxResult = (
   activeResidentTab: string,
   deductions: number,
   taxCredits: number,
-  holdPrivateInsurance: boolean
+  holdPrivateInsurance: boolean,
+  totalWorkingDays?: number,
+  totalWorkingHours?: number
 ) => {
-  console.log(1111, {
-    incomeYear,
-    incomeType,
-    income,
-    activeResidentTab,
-    deductions,
-    taxCredits,
-  });
-  let annualIncome;
-  if (incomeType === "annually") {
-    annualIncome = income;
-  } else if (incomeType === "monthly") {
-    annualIncome = income * 12;
-  } else {
-    // 5 days per week, 52 weeks per year
-    annualIncome = income * 5 * 52;
-  }
+  // let annualIncome;
+  // switch (incomeType) {
+  //   case "annually":
+  //     annualIncome = income;
+  //     break;
+  //   case "monthly":
+  //     annualIncome = income * 12;
+  //     break;
+  //   case "fortnightly":
+  //     annualIncome = income * 26;
+  //     break;
+  //   case "weekly":
+  //     annualIncome = income * 52;
+  //     break;
+  //   case "daily":
+  //     annualIncome = income * (totalWorkingDays ?? 0); // Use default value of 0 if undefined
+  //     break;
+  //   case "hourly":
+  //     annualIncome = income * (totalWorkingHours ?? 0); // Use default value of 0 if undefined
+  //     break;
+  //   default:
+  //     annualIncome = 0; // Handle unexpected incomeType
+  //     break;
+  // }
 
-  const taxableIncome = annualIncome - deductions;
+  const taxableIncome = income - deductions;
 
   const levy = getMedicareLevy(taxableIncome);
 
@@ -61,19 +70,19 @@ export const getFullTimeTaxResult = (
       activeResidentTab
     );
   }
-  console.log("medicalLevySurcharge", medicalLevySurcharge);
+
   const fullTimeTaxResult = {
-    annualIncome,
+    income,
     taxableIncome,
     levy,
     taxPayable,
     medicalLevySurcharge,
-    monthlyIncome: annualIncome / 12,
+    monthlyIncome: income / 12,
     monthlyTaxableIncome: taxableIncome / 12,
     monthlylevy: levy / 12,
     monthlyTaxPayable: taxPayable / 12,
     monthlyMedicalLevySurcharge: medicalLevySurcharge / 12,
-    weeklyIncome: annualIncome / 52,
+    weeklyIncome: income / 52,
     weeklyTaxableIncome: taxableIncome / 52,
     weeklylevy: levy / 52,
     weeklyTaxPayable: taxPayable / 52,

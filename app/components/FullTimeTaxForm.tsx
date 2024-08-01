@@ -30,14 +30,19 @@ import useTaxStore from "@/app/store/useStore";
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import superRatesList from "@/app/data/superRates.json";
-import { getTaxableIncomeAnnually } from "../utils/getTaxableIncomeAnnually";
-import { getIncomeTaxPayable } from "../utils/getIncomeTaxPayable";
+import { OptionButton } from "./OptionButton";
 
 const FormSchema = z.object({
   incomeType: z
     .string()
     .min(1, "Please select an income type.")
     .default("annually"),
+  totalWorkingDays: z.number().refine((val) => val >= 0, {
+    message: "Total working days must be non-negative",
+  }),
+  totalWorkingHours: z.number().refine((val) => val >= 0, {
+    message: "Total working hours must be non-negative",
+  }),
   income: z
     .string()
     .min(1, "Please input the income.")
@@ -73,7 +78,7 @@ const FormSchema = z.object({
     .refine((val) => val >= 0, {
       message: "Tax credits and concessions must be non-negative",
     }),
-  holdPrivateInsurance: z.boolean().default(false).optional(),
+  holdPrivateInsurance: z.boolean().default(false),
 });
 
 export function FullTimeTaxForm() {
@@ -81,12 +86,12 @@ export function FullTimeTaxForm() {
   const [activeResidentTab, setActiveResidentTab] = useState(
     "Australian resident"
   );
+
   const {
-    employmentType,
+    // employmentType,
     incomeType,
     incomeYear,
     setIncomeType,
-    fullTimeIncome,
     setfullTimeIncome,
     setFullTimeDeductions,
     setFullTimeTaxCredits,
@@ -103,29 +108,11 @@ export function FullTimeTaxForm() {
 
   const currentSuperRate = getIncomeYearSuperRate(incomeYear);
 
-  const handleTabClick = (tabName: string) => {
-    setActiveSalaryTypeTab(tabName);
-  };
-
-  const handleResidentTabClick = (tabName: string) => {
-    setActiveResidentTab(tabName);
-  };
-
-  const getTabClass = (tabName: string) => {
-    return tabName === activeSalaryTypeTab
-      ? "px-2 cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 xl:pt-2.5"
-      : "px-2 cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 xl:pt-2.5";
-  };
-
-  const getResidentTabClass = (tabName: string) => {
-    return tabName === activeResidentTab
-      ? "cursor-pointer rounded-md bg-themePrimaryHover flex justify-center pt-1 xl:pt-3.5 text-xs"
-      : "cursor-pointer rounded-md hover:bg-themePrimaryHover flex justify-center pt-1 xl:pt-3.5  text-xs";
-  };
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      totalWorkingDays: 0,
+      totalWorkingHours: 0,
       superRate: currentSuperRate,
       holdPrivateInsurance: false,
     },
@@ -140,16 +127,10 @@ export function FullTimeTaxForm() {
       incomeYear,
       activeSalaryTypeTab,
       activeResidentTab,
-      employmentType,
-      // holdPrivateInsurance,
+      // employmentType,
     };
-    console.log("fullData1111", fullData);
+    console.log("fullData", fullData);
     setFullTimeResult(fullData);
-    // const abc = getIncomeTaxPayable(
-    //   fullTimeIncome,
-    //   incomeYear,
-    //   activeResidentTab
-    // );
   }
 
   const dynamicIncomeType =
@@ -183,7 +164,10 @@ export function FullTimeTaxForm() {
                 <SelectContent>
                   <SelectItem value="annually">Annually</SelectItem>
                   <SelectItem value="monthly">Monthly</SelectItem>
+                  <SelectItem value="fortnightly">Fortnightly</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
                   <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="hourly">Hourly</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -197,26 +181,12 @@ export function FullTimeTaxForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{`${dynamicIncomeType} salary *`}</FormLabel>
-              <div className="grid grid-rows-3 xl:grid-rows-1 xl:grid-flow-col w-[100%] xl:w-[120%] h-[90px] xl:h-[40px] text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
-                <div
-                  className={getTabClass("Base salary")}
-                  onClick={() => handleTabClick("Base salary")}
-                >
-                  Base salary
-                </div>
-                <div
-                  className={getTabClass("Package")}
-                  onClick={() => handleTabClick("Package")}
-                >
-                  Package
-                </div>
-                <div
-                  className={getTabClass("In hand")}
-                  onClick={() => handleTabClick("In hand")}
-                >
-                  In hand
-                </div>
-              </div>
+              <OptionButton
+                options={["Base salary", "Package", "In hand"]}
+                optionsText={["Base salary", "Package", "In hand"]}
+                activeOption={activeSalaryTypeTab}
+                setFunction={setActiveSalaryTypeTab}
+              />
               <FormControl>
                 <Input
                   placeholder="$0"
@@ -232,29 +202,69 @@ export function FullTimeTaxForm() {
             </FormItem>
           )}
         />
-        <FormItem>
-          <FormLabel>Resident type *</FormLabel>
-          <div className="grid grid-rows-3 xl:grid-rows-1 xl:grid-flow-col w-[100%] xl:w-[120%] h-[90px] xl:h-[44px] xl:text-sm rounded-md bg-themePrimary text-white border-slate-200 border-[1px]">
-            <div
-              className={getResidentTabClass("Australian resident")}
-              onClick={() => handleResidentTabClick("Australian resident")}
-            >
-              Australian resident
-            </div>
-            <div
-              className={getResidentTabClass("Foreign resident")}
-              onClick={() => handleResidentTabClick("Foreign resident")}
-            >
-              Foreign resident
-            </div>
-            <div
-              className={getResidentTabClass("Working holiday makers")}
-              onClick={() => handleResidentTabClick("Working holiday makers")}
-            >
-              working holiday
-            </div>
-          </div>
-        </FormItem>
+        {incomeType === "daily" && (
+          <FormField
+            control={form.control}
+            name="totalWorkingDays"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Total working days *</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="260"
+                    {...field}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(parseFloat(e.target.value));
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        {incomeType === "hourly" && (
+          <FormField
+            control={form.control}
+            name="totalWorkingHours"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Total working hours *</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="996"
+                    {...field}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(parseFloat(e.target.value));
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        {/* Resident type selected */}
+        <OptionButton
+          label={"Resident type *"}
+          options={[
+            "Australian resident",
+            "Foreign resident",
+            "Working holiday makers",
+          ]}
+          optionsText={[
+            "Australian resident",
+            "Foreign resident",
+            "Working holiday makers",
+          ]}
+          activeOption={activeResidentTab}
+          setFunction={setActiveResidentTab}
+        />
+
         <FormField
           control={form.control}
           name="superRate"
@@ -264,10 +274,9 @@ export function FullTimeTaxForm() {
               <FormControl>
                 <Input
                   {...field}
-                  value={field.value ?? ""}
+                  value={field.value}
                   onChange={(e) => {
-                    field.onChange(e.target.value);
-                    // setFullTimeDeductions(parseFloat(e.target.value) || 0);
+                    field.onChange(parseFloat(e.target.value));
                   }}
                 />
               </FormControl>
@@ -279,7 +288,7 @@ export function FullTimeTaxForm() {
           <Accordion type="single" collapsible className="w-[120%]">
             <AccordionItem value="item-1">
               <AccordionTrigger>
-                Tax deductions, credits and concessions
+                Tax deductions and concessions
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-5">

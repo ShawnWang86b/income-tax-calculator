@@ -5,6 +5,7 @@ export const getMedicalLevySurcharge = (
   incomeYear: string,
   activeResidentTab: string
 ) => {
+  //@ts-ignore
   const levySurchargeBrackets = medicareLevySurchargeRates[incomeYear];
 
   if (!levySurchargeBrackets) {

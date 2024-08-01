@@ -1,15 +1,8 @@
 "use client";
 
 import useTaxStore from "@/app/store/useStore";
-import { EmploymentTypeForm } from "@/app/components/EmploymentTypeForm";
-import { PartTimeTaxForm } from "@/app/components/PartTimeTaxForm";
 import { FullTimeTaxForm } from "@/app/components/FullTimeTaxForm";
-import { CasualTaxForm } from "@/app/components/CasualTaxForm";
-import { ContractorTaxForm } from "@/app/components/ContractorTaxForm";
 import { FullTimeTable } from "@/app/components/FullTimeTable";
-import { PartTimeTable } from "@/app/components/PartTimeTable";
-import { CasualTable } from "@/app/components/CasualTable";
-import { ContractorTable } from "@/app/components/ContractorTable";
 import SideBar from "@/app/components/SideBar";
 import {
   Sheet,
@@ -52,12 +45,12 @@ export default function Home() {
   return (
     <>
       <MobileHeader />
-      <SideBar className="hidden xl:flex" />
-      <main className="flex h-screen xl:pl-[280px]">
+      <SideBar className="hidden 2xl:flex" />
+      <main className="flex h-screen 2xl:pl-[280px]">
         {/* @ts-ignore */}
         <ResizablePanelGroup direction={direction} className="rounded-md">
           <ResizablePanel defaultSize={35}>
-            <div className="flex justify-center items-start pt-16 xl:pt-4 px-4 h-[100%] scroll-container">
+            <div className="flex justify-center items-start pt-14 2xl:pt-4 px-4 h-[100%] scroll-container">
               <section className="min-w-96 flex flex-col justify-center items-start px-10 border-[1px] border-slate-200 bg-muted py-5 w-full">
                 <div className="flex justify-between w-full">
                   <div className="text-xl font-semibold">
@@ -117,12 +110,7 @@ export default function Home() {
                 <div className="w-full py-2">
                   <IncomeYearForm />
                 </div>
-
-                <EmploymentTypeForm />
-                {employmentType === "full-time" && <FullTimeTaxForm />}
-                {employmentType === "part-time" && <PartTimeTaxForm />}
-                {employmentType === "casual" && <CasualTaxForm />}
-                {employmentType === "contractor" && <ContractorTaxForm />}
+                <FullTimeTaxForm />
               </section>
             </div>
           </ResizablePanel>
@@ -130,11 +118,8 @@ export default function Home() {
           <ResizablePanel defaultSize={65}>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel defaultSize={60}>
-                <section className="w-full pt-16 xl:pt-4 h-[100%] scroll-container">
-                  {employmentType === "full-time" && <FullTimeTable />}
-                  {employmentType === "part-time" && <PartTimeTable />}
-                  {employmentType === "casual" && <CasualTable />}
-                  {employmentType === "contractor" && <ContractorTable />}
+                <section className="w-full pt-14 2xl:pt-4 h-[100%] scroll-container">
+                  <FullTimeTable />
                 </section>
               </ResizablePanel>
               <ResizableHandle withHandle />

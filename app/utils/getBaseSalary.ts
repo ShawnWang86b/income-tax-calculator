@@ -6,7 +6,9 @@ export const getBaseSalary = (
   superRate: number,
   incomeYear: string,
   activeResidentTab: string,
-  deductions: number
+  deductions: number,
+  totalWorkingDays?: number,
+  totalWorkingHours?: number
 ) => {
   let baseSalary;
   if (incomeType === "Package") {
@@ -22,6 +24,6 @@ export const getBaseSalary = (
     // Base salary
     baseSalary = salary;
   }
-  console.log("baseSalary", baseSalary);
+
   return baseSalary;
 };

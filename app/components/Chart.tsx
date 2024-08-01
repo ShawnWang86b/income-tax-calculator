@@ -14,6 +14,7 @@ import { getFullTimeTaxResult } from "@/app/utils/getFullTimeTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
 import { getBaseSalary } from "@/app/utils/getBaseSalary";
 import { useState, useCallback } from "react";
+import { getAlignedIncome } from "../utils/getAlignedIncome";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -107,16 +108,27 @@ const Chart = () => {
     deductions,
     taxCredits,
     holdPrivateInsurance,
+    totalWorkingDays,
+    totalWorkingHours,
   } = fullTimeResult;
+
+  const alignedIncome = getAlignedIncome(
+    income,
+    incomeType,
+    totalWorkingDays,
+    totalWorkingHours
+  );
 
   // Get annually base salary before tax
   const baseSalary = getBaseSalary(
-    income,
+    alignedIncome,
     activeSalaryTypeTab,
     superRate,
     incomeYear,
     activeResidentTab,
-    deductions
+    deductions,
+    totalWorkingDays,
+    totalWorkingHours
   );
 
   const fullTimeTaxResult = getFullTimeTaxResult(
@@ -126,9 +138,11 @@ const Chart = () => {
     activeResidentTab,
     deductions,
     taxCredits,
-    holdPrivateInsurance
+    holdPrivateInsurance,
+    totalWorkingDays,
+    totalWorkingHours
   );
-
+  console.log("fullTimeTaxResult", fullTimeTaxResult);
   // annually income in hand
   const netIncome =
     fullTimeTaxResult.taxableIncome -
@@ -136,7 +150,7 @@ const Chart = () => {
     fullTimeTaxResult.levy;
 
   const data = [
-    { name: "Net income", value: netIncome },
+    { name: "Net income", value: parseFloat(netIncome.toFixed(2)) },
     { name: "Income tax ", value: fullTimeTaxResult.taxPayable },
     { name: "Medicare levy", value: fullTimeTaxResult.levy },
     {
@@ -148,7 +162,7 @@ const Chart = () => {
   const COLORS = ["#1868DB", "#172B4D", "#000", "#078559"];
 
   return (
-    <PieChart width={600} height={600} className="text-xs">
+    <PieChart width={400} height={400} className="text-xs">
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}

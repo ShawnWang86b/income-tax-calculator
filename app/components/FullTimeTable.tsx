@@ -4,6 +4,7 @@ import useTaxStore from "@/app/store/useStore";
 import { getFullTimeTaxResult } from "@/app/utils/getFullTimeTaxResult";
 import { formatNumber } from "@/app/utils/formatNumber";
 import { getBaseSalary } from "@/app/utils/getBaseSalary";
+import { getAlignedIncome } from "../utils/getAlignedIncome";
 
 export function FullTimeTable() {
   const { fullTimeResult } = useTaxStore();
@@ -17,16 +18,27 @@ export function FullTimeTable() {
     deductions,
     taxCredits,
     holdPrivateInsurance,
+    totalWorkingDays,
+    totalWorkingHours,
   } = fullTimeResult;
+
+  const alignedIncome = getAlignedIncome(
+    income,
+    incomeType,
+    totalWorkingDays,
+    totalWorkingHours
+  );
 
   // Get annually base salary before tax
   const baseSalary = getBaseSalary(
-    income,
+    alignedIncome,
     activeSalaryTypeTab,
     superRate,
     incomeYear,
     activeResidentTab,
-    deductions
+    deductions,
+    totalWorkingDays,
+    totalWorkingHours
   );
 
   const fullTimeTaxResult = getFullTimeTaxResult(
@@ -36,7 +48,9 @@ export function FullTimeTable() {
     activeResidentTab,
     deductions,
     taxCredits,
-    holdPrivateInsurance
+    holdPrivateInsurance,
+    totalWorkingDays,
+    totalWorkingHours
   );
 
   // annually income in hand
